@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const commentRouter = require("./Routers/commentRouter");
 const authRouter = require("./Routers/authRouter") 
 const categoryRouter = require("./Routers/categoryRouter")
+const productRouter = require("./Routers/productRouter")
 
 const errorMiddleware = require("./Middlewares/errorMiddleware");
  
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use("/comment", commentRouter)
 app.use("/authentication", authRouter)
 app.use("/categories", categoryRouter)
+app.use("/products", productRouter)
 
 app.use(errorMiddleware)
 
