@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 const userModel = require("../Models/userModel");
 const ApiError = require("../Middlewares/apiError");
 
@@ -11,6 +13,8 @@ class AuthService {
             throw new ApiError(422, "Uniqueness error", {email : ["!Current email is already taken!"]})
         }
 
+        userDTO.password = bcrypt.hashSync(userDTO.password, 10);
+
         const user = await userModel.create({ name: userDTO.name, user_id: Date.now(), password: userDTO.password, email: userDTO.email, whishList: [], favoritesList: []});
 
         return {
@@ -22,13 +26,16 @@ class AuthService {
 
     async remove(userDTO) {
         const nameCandidate = await userModel.findOne({ name: userDTO.name });
-        const passwordCandidate = await userModel.findOne({ password: userDTO.password });
 
-        if (!nameCandidate || !passwordCandidate) {
-            throw new Error("Current name or password is incorrect");
+        if(!nameCandidate){
+            throw new ApiError(422,"Current name or password is incorrect")
         }
-
-        await userModel.deleteOne({ name: userDTO.name, password: userDTO.password });
+        
+        if (!bcrypt.compareSync(userDTO.password, nameCandidate.password)) {
+            throw new ApiError(422, "Current name or password is incorrect");
+        }
+        
+        await userModel.deleteOne({ name: userDTO.name});
 
         return {
             name: userDTO.name,
@@ -38,14 +45,19 @@ class AuthService {
 
     async changePassword(userDTO, newPassword) {
 
-        const changeCandidate = await userModel.findOne({ name: userDTO.name, password: userDTO.password });
+        const changeCandidate = await userModel.findOne({ name: userDTO.name });
 
         if (!changeCandidate) {
             throw new Error("Current name or password is incorrect");
         }
 
-        await userModel.updateOne({ name: userDTO.name, password: userDTO.password },
-            { name: userDTO.name, password: newPassword });
+        if (!bcrypt.compareSync(userDTO.password, changeCandidate.password)) {
+            throw new ApiError(422, "Current name or password is incorrect");
+        }
+
+        newPassword = bcrypt.hashSync(newPassword, 10);
+
+        await userModel.updateOne({ name: userDTO.name },{ password: newPassword });
 
         return {
             name: changeCandidate.name, 
@@ -54,30 +66,43 @@ class AuthService {
     }
 
     async changeName(userDTO, newName) {
-        console.log(userDTO)
 
-        const changeCandidate = await userModel.findOne({ name: userDTO.name, password: userDTO.password });
+        const newNameCandidate = await userModel.findOne({name: newName})
 
-        if (!changeCandidate) {
-            throw new Error("Current name or password is incorrect");
+        if(newNameCandidate){
+            throw new ApiError(422, "Sorry, this name is already taken")
         }
 
-        await userModel.updateOne({ name: userDTO.name, password: userDTO.password },
-            { name: newName, password: userDTO.password });
+        const changeCandidate = await userModel.findOne({ name: userDTO.name });
+
+        if (!changeCandidate) {
+            throw new ApiError(422, "Current name or password is incorrect");
+        }
+
+        if (!bcrypt.compareSync(userDTO.password, changeCandidate.password)) {
+            throw new ApiError(422, "Current name or password is incorrect");
+        }
+
+        await userModel.updateOne({ name: userDTO.name },
+            { name: newName });
 
 
         return {
             name: newName, 
-           password: userDTO.password 
+            password: userDTO.password 
         }
 
     }
 
     async find(userDTO) {
-        const nameCandidate = await userModel.findOne({ name: userDTO.name, password: userDTO.password });
+        const nameCandidate = await userModel.findOne({ name: userDTO.name });
 
         if (!nameCandidate) {
             throw new ApiError(422, "Current name or password is incorrect!")
+        }
+
+        if (!bcrypt.compareSync(userDTO.password, nameCandidate.password)) {
+            throw new ApiError(422, "Current name or password is incorrect");
         }
 
         return {

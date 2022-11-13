@@ -9,7 +9,8 @@ const ProductSchema = new Schema({
    sale: {type: Number, require: true},
    producer: {type: String, require: true},
    description: {type: String, require: true},
-   sold_count: {type: Number, require: true}
+   sold_count: {type: Number, require: true},
+   photo: {type: String, require: true}
 
 });
 

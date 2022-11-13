@@ -18,7 +18,6 @@ class AuthController{
         }catch(e){
             next(e);
         }
-
     }
 
     async remove(req, res, next){
@@ -36,7 +35,6 @@ class AuthController{
         }catch(e){
             next(e);
         }
-
     }
 
     async changePassword(req, res, next){
@@ -52,9 +50,9 @@ class AuthController{
           });
           
         }catch(e){
+            console.log(e)
             next(e);
         }
-
     }
 
     async changeName(req, res, next){
@@ -72,7 +70,6 @@ class AuthController{
         }catch(e){
             next(e);
         }
-
     }
 
     async find(req, res, next){
@@ -90,7 +87,6 @@ class AuthController{
         }catch(e){
             next(e);
         }
-
     }
 }
 

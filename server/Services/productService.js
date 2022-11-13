@@ -12,7 +12,7 @@ class ProductService{
         }
 
         productDTO.product_id = Date.now()
-
+        
         const product = await productModel.create(productDTO);
 
         return {
