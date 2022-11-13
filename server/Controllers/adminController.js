@@ -3,7 +3,7 @@ const AdminDTO = require("../DTOs/adminDTO");
 
 class AuthController{
 
-    async create(req, res, next){
+    async addAdmin(req, res, next){
         try{
           const {login, password} = req.body;
           const payload = new AdminDTO(login, password);
@@ -20,7 +20,7 @@ class AuthController{
         }
     }
 
-    async remove(req, res, next){
+    async removeAdmin(req, res, next){
         try{
           const {login, password} = req.body;
           const payload = new AdminDTO(login, password);
@@ -54,7 +54,7 @@ class AuthController{
         }
     }
 
-    async find(req, res, next){
+    async findAdmin(req, res, next){
         try{
           const {login, password} = req.body;
           const payload = new AdminDTO(login, password);

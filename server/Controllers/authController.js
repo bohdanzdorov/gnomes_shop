@@ -20,7 +20,7 @@ class AuthController{
         }
     }
 
-    async remove(req, res, next){
+    async removeUser(req, res, next){
         try{
           const {name, password} = req.body;
           const payload = new UserDTO(name, password);
@@ -72,7 +72,7 @@ class AuthController{
         }
     }
 
-    async find(req, res, next){
+    async findUser(req, res, next){
         try{
           const {name, password} = req.body;
           const payload = new UserDTO(name, password);

@@ -3,8 +3,8 @@ const controller = require("../Controllers/commentController");
 
 const commentRouter = new Router();
 
-commentRouter.post("/add", controller.create);
-commentRouter.delete("/remove", controller.removeById);
-commentRouter.get("/findById", controller.findById);
+commentRouter.post("/add", controller.addComment);
+commentRouter.delete("/remove", controller.removeCommentById);
+commentRouter.get("/findById", controller.findCommentById);
 
 module.exports = commentRouter;

@@ -5,7 +5,7 @@ const productService = require("../Services/productService")
 class ProductController{
    
 
-    async add(req, res, next){
+    async addProduct(req, res, next){
         try{
             const{name, category_id, price, sale, producer, description, sold_count} = req.body
 
@@ -23,7 +23,7 @@ class ProductController{
        }
     }
 
-    async remove(req, res, next){
+    async removeProduct(req, res, next){
         try{
             const{name} = req.body
 
@@ -41,7 +41,7 @@ class ProductController{
        }
     }
 
-    async changeById(req, res, next){
+    async changeProductById(req, res, next){
         try{
           const {name, product_id, category_id, price, sale, producer, description, sold_count} = req.body;
           const payload = new ProductDTO(name, product_id, category_id, price, sale, producer, description, sold_count);
@@ -59,7 +59,7 @@ class ProductController{
 
     }
 
-    async find(req, res, next){
+    async findProduct(req, res, next){
         try{
             const{name, product_id} = req.body
             const payload = new ProductDTO(name, product_id)

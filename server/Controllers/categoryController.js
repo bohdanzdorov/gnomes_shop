@@ -1,9 +1,9 @@
 const categoryService = require("../Services/categoryService");
 const CategoryDTO = require("../DTOs/categoryDTO");
 
-class AuthController{
+class CategoryController{
 
-    async create(req, res, next){
+    async createCategory(req, res, next){
         try{
           const {name} = req.body;
           const payload = new CategoryDTO(name);
@@ -21,7 +21,7 @@ class AuthController{
 
     }
 
-    async remove(req, res, next){
+    async removeCategory(req, res, next){
         try{
           const {name} = req.body;
           const payload = new CategoryDTO(name);
@@ -58,7 +58,7 @@ class AuthController{
     }
 
 
-    async find(req, res, next){
+    async findCategory(req, res, next){
         try{
           const {name} = req.body;
           const payload = new CategoryDTO(name);
@@ -77,4 +77,4 @@ class AuthController{
     }
 }
 
-module.exports = new AuthController();
+module.exports = new CategoryController();

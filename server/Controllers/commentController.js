@@ -1,9 +1,9 @@
 const commentService = require("../Services/commentService");
 const CommentDTO = require("../DTOs/commentDTO");
 
-class AuthController{
+class CommentController{
 
-    async create(req, res, next){
+    async addComment(req, res, next){
         try{
           const {user_id, product_id, text} = req.body;
           const payload = new CommentDTO(user_id, -1, product_id, text);
@@ -21,7 +21,7 @@ class AuthController{
 
     }
 
-    async removeById(req, res, next){
+    async removeCommentById(req, res, next){
         try{
           const {comment_id} = req.body;
           const payload = new CommentDTO(-1, comment_id);
@@ -40,7 +40,7 @@ class AuthController{
 
     }
 
-    async findById(req, res, next){
+    async findCommentById(req, res, next){
         try{
           const {comment_id} = req.body;
           const payload = new CommentDTO(-1, comment_id);
@@ -59,4 +59,4 @@ class AuthController{
     }
 }
 
-module.exports = new AuthController();
+module.exports = new CommentController();

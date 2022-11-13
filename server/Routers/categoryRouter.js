@@ -3,9 +3,9 @@ const controller = require("../Controllers/categoryController");
 
 const categoryRouter = new Router();
 
-categoryRouter.post("/create", controller.create);
-categoryRouter.delete("/remove", controller.remove);
+categoryRouter.post("/create", controller.createCategory);
+categoryRouter.delete("/remove", controller.removeCategory);
 categoryRouter.put("/updateName", controller.updateName);
-categoryRouter.get("/findByName", controller.find);
+categoryRouter.get("/findByName", controller.findCategory);
 
 module.exports = categoryRouter;
