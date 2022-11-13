@@ -59,13 +59,20 @@ class ProductController{
 
     }
 
-    async findByName(req, res, next){
+    async find(req, res, next){
         try{
-            const{name} = req.body
-            const payload = new ProductDTO(name)
+            const{name, product_id} = req.body
+            const payload = new ProductDTO(name, product_id)
 
-            const product = await productService.find(payload)
+            console.log(payload.name)
 
+            let product
+            if(!payload.name){
+                 product =  await productService.findById(payload)
+            }else{
+                 product = await productService.findByName(payload)
+            }
+            
             return res.status(200).json({
                 success: true,
                 product: product

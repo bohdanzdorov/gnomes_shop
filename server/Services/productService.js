@@ -62,14 +62,25 @@ class ProductService{
         }
     }
 
-    async find(productDTO){
+    async findByName(productDTO){
         const nameCandidate = await productModel.findOne({ name: productDTO.name});
-
+        console.log("id x2")
         if (!nameCandidate) {
             throw new ApiError(422, "!Product with such name does not exist!")
         }
-
+       
         return nameCandidate
+    }
+
+
+    async findById(productDTO){
+        const idCandidate = await productModel.findOne({ product_id: productDTO.product_id});
+       
+        if (!idCandidate) {
+            throw new ApiError(422, "!Product with such id does not exist!")
+        }
+
+        return idCandidate
     }
 
 
