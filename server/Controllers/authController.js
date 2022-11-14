@@ -72,6 +72,23 @@ class AuthController{
         }
     }
 
+    async logIn(req, res, next){
+      try{
+        const {name, password} = req.body;
+        const payload = new UserDTO(name, password);
+
+        const user = await authService.logIn(payload);
+       
+        return res.status(200).json({
+          success: true,
+          user: user
+        });
+
+      }catch(e){
+        next(e)
+      }
+    }
+
     async findUser(req, res, next){
         try{
           const {name, password} = req.body;

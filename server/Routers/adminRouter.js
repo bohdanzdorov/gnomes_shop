@@ -6,7 +6,7 @@ const adminRouter = new Router();
 adminRouter.post("/create", controller.addAdmin);
 adminRouter.delete("/remove", controller.removeAdmin);
 adminRouter.put("/changeName", controller.changeLogin);
+adminRouter.get("/logIn", controller.logIn);
 adminRouter.get("/find", controller.findAdmin);
-
 
 module.exports = adminRouter;

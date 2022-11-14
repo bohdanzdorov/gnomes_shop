@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken")
 
 const adminModel = require("../Models/adminModel");
 const ApiError = require("../Middlewares/apiError");
@@ -15,11 +16,14 @@ class AdminService {
 
         adminDTO.password = bcrypt.hashSync(adminDTO.password, 12);
 
+        const token = jwt.sign({}, process.env.SECRET_ADMIN_ACCESS_TOKEN, { expiresIn: "3600s" })
+
         const admin = await adminModel.create({ login: adminDTO.login, password: adminDTO.password });
 
         return {
             login: admin.login,
             password: admin.password,
+            token: token
         }
     }
 
@@ -69,6 +73,25 @@ class AdminService {
             password: adminDTO.password 
         }
 
+    }
+
+    async logIn(adminDTO){
+        const loginCandidate = await adminModel.findOne({ login: adminDTO.login });
+
+        if (!loginCandidate) {
+            throw new ApiError(422, "Current name or password is incorrect!")
+        }
+
+        if (!bcrypt.compareSync(adminDTO.password, loginCandidate.password)) {
+            throw new ApiError(422, "Current name or password is incorrect");
+        }
+
+        const token = jwt.sign({}, process.env.SECRET_ADMIN_ACCESS_TOKEN, { expiresIn: "7200s" })
+
+        return {
+           login: loginCandidate.login, 
+           token: token
+        }
     }
 
     async find(adminDTO) {
