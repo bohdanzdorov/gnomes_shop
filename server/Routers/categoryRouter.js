@@ -1,13 +1,13 @@
 const Router = require("express").Router;
 const controller = require("../Controllers/categoryController");
 
-const userValidationMiddleware = require("../Middlewares/userValidationMiddleware");
+const adminValidationMiddleware = require("../Middlewares/adminValidationMiddleware");
 
 const categoryRouter = new Router();
 
-categoryRouter.post("/create", userValidationMiddleware, controller.createCategory);
-categoryRouter.delete("/remove", controller.removeCategory);
-categoryRouter.put("/updateName", controller.updateName);
-categoryRouter.get("/findByName", controller.findCategory);
+categoryRouter.post("/create", adminValidationMiddleware, controller.createCategory);
+categoryRouter.delete("/remove", adminValidationMiddleware, controller.removeCategory);
+categoryRouter.put("/updateName", adminValidationMiddleware, controller.updateName);
+categoryRouter.get("/findByName", adminValidationMiddleware, controller.findCategory);
 
 module.exports = categoryRouter;

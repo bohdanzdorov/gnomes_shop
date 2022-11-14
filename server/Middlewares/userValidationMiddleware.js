@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken")
-
 const ApiError = require("./apiError");
-
 
 module.exports = async(req, res, next)=>{
      try{
