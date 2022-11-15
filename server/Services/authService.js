@@ -138,6 +138,26 @@ class AuthService {
         }
     }
 
+    async removeFromWhishlist(userDTO, productDTO){
+        const userCandidate = await userModel.findOne({user_id: userDTO.user_id})
+
+        if(!userCandidate){
+            throw new ApiError(422, "Invalid user id")
+        }
+
+        const productCandidate = await productModel.findOne({product_id: productDTO.product_id})
+
+        if(!productCandidate){
+            throw new ApiError(422, "Invalid product id")
+        }
+
+        await userModel.updateOne({ user_id: userDTO.user_id }, { $pullAll: { whishList: [productDTO.product_id] } });
+
+        return {
+            product_id: productCandidate.product_id
+        }
+    }
+
     async addToFavorites(userDTO, productDTO){
         const userCandidate = await userModel.findOne({user_id: userDTO.user_id})
 
@@ -152,6 +172,26 @@ class AuthService {
         }
 
         await userModel.updateOne({ user_id: userDTO.user_id }, { $push: { favoritesList : productDTO.product_id } });
+
+        return {
+            product_id: productCandidate.product_id
+        }
+    }
+
+    async removeFromFavorites(userDTO, productDTO){
+        const userCandidate = await userModel.findOne({user_id: userDTO.user_id})
+
+        if(!userCandidate){
+            throw new ApiError(422, "Invalid user id")
+        }
+
+        const productCandidate = await productModel.findOne({product_id: productDTO.product_id})
+
+        if(!productCandidate){
+            throw new ApiError(422, "Invalid product id")
+        }
+
+        await userModel.updateOne({ user_id: userDTO.user_id }, { $pullAll: { favoritesList: [productDTO.product_id] } });
 
         return {
             product_id: productCandidate.product_id

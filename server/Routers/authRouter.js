@@ -9,7 +9,9 @@ authRouter.put("/changePassword", controller.changePassword);
 authRouter.put("/changeName", controller.changeName);
 authRouter.get("/logIn", controller.logIn);
 authRouter.post("/addToWhishList", controller.addToWhishlist);
-authRouter.post("/addToFavorites", controller.addToFavorites)
+authRouter.delete("/removeFromWhishlist", controller.removeFromWhishlist);
+authRouter.post("/addToFavorites", controller.addToFavorites);
+authRouter.delete("/removeFromFavorites", controller.removeFromFavorites)
 authRouter.get("/find", controller.findUser);
 
 

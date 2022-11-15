@@ -107,6 +107,23 @@ class AuthController{
       }
     }
 
+    async removeFromWhishlist(req, res, next){
+      try{
+        const {user_id, product_id} = req.body
+        const userPayload = new UserDTO("", "", user_id)
+        const productPayload = new ProductDTO("", product_id)
+
+        const user = await authService.removeFromWhishlist(userPayload, productPayload);
+
+        return res.status(200).json({
+          success: true,
+          user: user
+        })
+      }catch(e){
+        next(e)
+      }
+    }
+
     async addToFavorites(req, res, next){
       try{
         const {user_id, product_id} = req.body
@@ -114,6 +131,23 @@ class AuthController{
         const productPayload = new ProductDTO("", product_id)
 
         const user = await authService.addToFavorites(userPayload, productPayload);
+
+        return res.status(200).json({
+          success: true,
+          user: user
+        })
+      }catch(e){
+        next(e)
+      }
+    }
+
+    async removeFromFavorites(req, res, next){
+      try{
+        const {user_id, product_id} = req.body
+        const userPayload = new UserDTO("", "", user_id)
+        const productPayload = new ProductDTO("", product_id)
+
+        const user = await authService.removeFromFavorites(userPayload, productPayload);
 
         return res.status(200).json({
           success: true,
