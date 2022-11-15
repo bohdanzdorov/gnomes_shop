@@ -8,6 +8,8 @@ authRouter.delete("/remove", controller.removeUser);
 authRouter.put("/changePassword", controller.changePassword);
 authRouter.put("/changeName", controller.changeName);
 authRouter.get("/logIn", controller.logIn);
+authRouter.post("/addToWhishList", controller.addToWhishlist);
+authRouter.post("/addToFavorites", controller.addToFavorites)
 authRouter.get("/find", controller.findUser);
 
 
