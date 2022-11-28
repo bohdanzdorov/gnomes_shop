@@ -14,14 +14,20 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import TextField from '@mui/material/TextField';
 
 import MenuIcon from '@mui/icons-material/Menu';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
-import { Grid } from '@mui/material';
+
+import MainPage from './Pages/mainPage';
+import ProductPage from './Pages/productPage';
+import FavoritesPage from './Pages/favoritesPage';
+
+import { Grid, Paper } from '@mui/material';
+import BottomInfo from './Components/BottomInfo';
+import ShoppingCartPage from './Pages/shoppingCartPage';
 
 function App() {
 
@@ -105,7 +111,7 @@ function App() {
 
   return (
     <div className="App">
-      <AppBar position="absolute" sx={{ width: "100%", height: "10%", p: 1, mb: 5 }}>
+      <AppBar position="sticky" sx={{ width: "100%", height: "10%", p: 1, mb: 5 }}>
         <Toolbar key={"left"} >
           <IconButton
             size="large"
@@ -141,26 +147,29 @@ function App() {
               />
             </Grid>
             <Grid item>
-              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                Gnomes shop
-              </Typography>
+              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>Gnomes shop</Typography>
             </Grid>
           </Grid>
 
+          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+            <FavoriteIcon fontSize="large" />
+          </IconButton>
 
-          <FavoriteIcon color="inherit" fontSize="large" sx={{ pr: 2, pl: 2 }} />
-          <ShoppingCartIcon color="inherit" fontSize="large" sx={{ pr: 2, pl: 2 }} />
-          <PersonIcon color="inherit" fontSize="large" sx={{ pr: 2, pl: 2 }} />
+          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+            <ShoppingCartIcon fontSize="large" />
+          </IconButton>
 
+          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+            <PersonIcon fontSize="large" />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
-      <Divider sx={{ pt: 12 }} textAlign="center" role="presentation">
-        <TextField label="What are you looking for?" color="primary" sx={{width:"1000px"}} />
-      </Divider>
+      
 
+      <ShoppingCartPage/>
 
-
+      <BottomInfo/>
 
     </div>
   );
