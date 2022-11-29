@@ -1,90 +1,45 @@
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {Divider, Typography} from "@mui/material"
-import { TransitionGroup } from 'react-transition-group';
 
-const FRUITS = [
-    '🍏 Apple',
-    '🍌 Banana',
-    '🍍 Pineapple',
-    '🥥 Coconut',
-    '🍉 Watermelon',
-];
+import { Divider, Typography, Button } from "@mui/material"
 
-function renderItem({ item, handleRemoveFruit }) {
-    return (
-        <ListItem
-            secondaryAction={
-                <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    title="Delete"
-                    onClick={() => handleRemoveFruit(item)}
-                >
-                    <DeleteIcon />
-                </IconButton>
-            }
-        >
-            <ListItemText primary={item} />
-        </ListItem>
-    );
-}
+import InCartProduct from '../Components/InCartProduct';
 
 function ShoppingCartPage() {
-    const [fruitsInBasket, setFruitsInBasket] = React.useState(FRUITS.slice(0, 3));
-
-    const handleAddFruit = () => {
-        const nextHiddenItem = FRUITS.find((i) => !fruitsInBasket.includes(i));
-        if (nextHiddenItem) {
-            setFruitsInBasket((prev) => [nextHiddenItem, ...prev]);
-        }
-    };
-
-    const handleRemoveFruit = (item) => {
-        setFruitsInBasket((prev) => [...prev.filter((i) => i !== item)]);
-    };
-
-    const addFruitButton = (
-        <Button
-            variant="contained"
-            disabled={fruitsInBasket.length >= FRUITS.length}
-            onClick={handleAddFruit}
-        >
-            Add fruit to basket
-        </Button>
-    );
 
     return (
         <div>
 
             <Divider>
-                <Typography variant="h4">
+                <Typography variant="h4" sx={{ mb: 1 }}>
                     Shopping cart
                 </Typography>
             </Divider>
 
+            <InCartProduct />
+            <InCartProduct />
+            <InCartProduct />
+            <InCartProduct />
 
-            {addFruitButton}
-            <Box sx={{ mt: 1 }}>
-                <List>
-                    <TransitionGroup>
-                        {fruitsInBasket.map((item) => (
-                            <Collapse key={item}>
-                                {renderItem({ item, handleRemoveFruit })}
-                            </Collapse>
-                        ))}
-                    </TransitionGroup>
-                </List>
-            </Box>
-        </div>
+            <Divider sx={{ m: 3, mb: 0 }} textAlign="right">
+                <Typography variant="h5">
+                    Total price: 400$
+                </Typography>
+            </Divider>
+
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+                <Button variant="contained" color="success" sx={{ width: "15%", height: 1 / 4, m: 3, p: 2}}>
+                    <Typography>
+                        Order
+                    </Typography>
+                </Button>
+
+            </div>
+
+
+
+        </div >
     )
 }
 

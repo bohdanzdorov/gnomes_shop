@@ -24,6 +24,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import MainPage from './Pages/mainPage';
 import ProductPage from './Pages/productPage';
 import FavoritesPage from './Pages/favoritesPage';
+import ManageAccountPage from './Pages/manageAccountPage';
 
 import { Grid, Paper } from '@mui/material';
 import BottomInfo from './Components/BottomInfo';
@@ -165,9 +166,8 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      
 
-      <ShoppingCartPage/>
+      <ManageAccountPage/>
 
       <BottomInfo/>
 

@@ -1,4 +1,4 @@
-import {Paper, Grid, Typography, Box} from "@mui/material"
+import {Paper, Grid, Typography, Box,Divider} from "@mui/material"
 
 export default function BottomInfo(props){
     return (
@@ -16,8 +16,10 @@ export default function BottomInfo(props){
               Adress : str.aaa, 13, aaa, aaa
             </Typography>
 
-
+           
           </Grid>
+
+          
 
           <Grid item xs={4}>
             <Typography variant="h5" >
@@ -35,6 +37,9 @@ export default function BottomInfo(props){
               Facebook : aaa
             </Typography>
           </Grid>
+
+
+          <Divider orientation="vertical" flexItem />
 
           <Grid item xs={5}>
             <Grid container spacing={1} alignItems="center" justifyContent="center">
