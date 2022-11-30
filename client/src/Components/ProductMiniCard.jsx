@@ -16,14 +16,14 @@ export default function ProductMiniCard(props) {
 
     return (
         <div>
-            <Card sx={{ width: "100%", height: "100%" }}>
+            <Card sx={{ minWidth: "100px" }}>
                 <CardActionArea>
                     {/* Character's photo */}
                     <CardMedia
                         component="img"
                         maxheight="35%"
                         width="100%"
-
+                        src="https://i1.sndcdn.com/avatars-000434396883-3whssn-t500x500.jpg"
                         alt="profile photo"
                     />
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -25,14 +25,19 @@ import MainPage from './Pages/mainPage';
 import ProductPage from './Pages/productPage';
 import FavoritesPage from './Pages/favoritesPage';
 import ManageAccountPage from './Pages/manageAccountPage';
+import ShoppingCartPage from './Pages/shoppingCartPage';
+
 
 import { Grid, Paper } from '@mui/material';
 import BottomInfo from './Components/BottomInfo';
-import ShoppingCartPage from './Pages/shoppingCartPage';
+
+import { useState } from 'react';
 
 function App() {
 
-  const [state, setState] = React.useState({ left: false });
+  const [state, setState] = useState({ left: false });
+
+  const [page, setPage] = useState("main")
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -65,7 +70,7 @@ function App() {
 
       <List onClick={toggleDrawer(anchor, false)}>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={()=>{setPage("favorites")}}>
             <ListItemText>Favorites</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <FavoriteIcon />
@@ -74,7 +79,7 @@ function App() {
         </ListItem>
 
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={()=>{setPage("shoppingCart")}}>
             <ListItemText>Shopping cart</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <ShoppingCartIcon />
@@ -83,7 +88,7 @@ function App() {
         </ListItem>
 
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={()=>{setPage("manageAccount")}}>
             <ListItemText>Manage account</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <PersonIcon />
@@ -134,16 +139,15 @@ function App() {
             {list("left")}
           </SwipeableDrawer>
 
-          <Grid container spacing={2} alignItems="center" justifyContent="center">
+          <Grid onClick={()=>{setPage("main")}} container spacing={2} alignItems="center" justifyContent="center">
             <Grid item>
               <Box
                 component="img"
                 sx={{
                   ml: 1,
-                  height: "4%",
-                  width: "4%",
+                  width: "100px",
                 }}
-                src=""
+                src="https://www.pngall.com/wp-content/uploads/5/Christmas-Gnome-PNG-Clipart.png"
                 alt="logo"
               />
             </Grid>
@@ -152,24 +156,30 @@ function App() {
             </Grid>
           </Grid>
 
-          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={()=>{setPage("favorites")}} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <FavoriteIcon fontSize="large" />
           </IconButton>
 
-          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={()=>{setPage("shoppingCart")}}color="inherit" sx={{ pr: 2, pl: 2 }}>
             <ShoppingCartIcon fontSize="large" />
           </IconButton>
 
-          <IconButton color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton  onClick={()=>{setPage("manageAccount")}} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <PersonIcon fontSize="large" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
+      {
+        {
+          "main": <MainPage />,
+          "favorites": <FavoritesPage />,
+          "manageAccount": <ManageAccountPage/>,
+          "shoppingCart": <ShoppingCartPage/>
+        }[page]
+      }
 
-      <ManageAccountPage/>
-
-      <BottomInfo/>
+      <BottomInfo />
 
     </div>
   );
