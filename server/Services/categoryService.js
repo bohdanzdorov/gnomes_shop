@@ -55,6 +55,14 @@ class CategoryService {
         }
     }
 
+    async getCategories(){
+        const categories =  await categoryModel.find({});
+
+        return {
+            categories: categories
+        }
+    }
+
     async find(categoryDTO) {
         const nameCandidate = await categoryModel.findOne({ name: categoryDTO.name});
 

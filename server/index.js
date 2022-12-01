@@ -1,7 +1,7 @@
 require("dotenv").config()
 const express = require("express");
 const mongoose = require("mongoose");
-
+const cors = require("cors")
 
 const adminRouter = require("./Routers/adminRouter")
 const commentRouter = require("./Routers/commentRouter");
@@ -14,6 +14,10 @@ const errorMiddleware = require("./Middlewares/errorMiddleware");
 const PORT = process.env.PORT; 
  
 const app = express();
+
+
+app.use(cors())
+
 app.use(express.json())
 
 app.use("/admin", adminRouter)

@@ -54,7 +54,20 @@ class CategoryController{
         }catch(e){
             next(e);
         }
+    }
 
+    async getCategories(req, res, next){
+      try{
+        const categories = await categoryService.getCategories();
+        console.log(categories)
+        return res.status(200).json({
+          succes: true,
+          categories: categories
+        });
+
+      }catch(e){
+        next(e)
+      }
     }
 
 

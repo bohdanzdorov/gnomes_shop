@@ -1,6 +1,3 @@
-
-import * as React from 'react';
-
 import { Divider, Typography, Button } from "@mui/material"
 
 import InCartProduct from '../Components/InCartProduct';

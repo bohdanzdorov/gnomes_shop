@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Button, Typography, CardActionArea, IconButton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, CardActionArea, IconButton} from '@mui/material';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,7 +12,6 @@ export default function ProductMiniCard(props) {
 
     const [isFavorite, setIsFavorite] = useState(false)
     const [isInCart, setIsInCart] = useState(false)
-
 
     return (
         <div>

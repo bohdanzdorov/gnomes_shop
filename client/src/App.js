@@ -1,21 +1,7 @@
-
-
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Grid, AppBar, Box, Toolbar, Typography, IconButton, SwipeableDrawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -27,17 +13,41 @@ import FavoritesPage from './Pages/favoritesPage';
 import ManageAccountPage from './Pages/manageAccountPage';
 import ShoppingCartPage from './Pages/shoppingCartPage';
 
-
-import { Grid, Paper } from '@mui/material';
 import BottomInfo from './Components/BottomInfo';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
-  const [state, setState] = useState({ left: false });
+  const [openMenu, setOpenMenu] = useState({ left: false });
 
   const [page, setPage] = useState("main")
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories()
+  }, [openMenu])
+
+  function getCategories() {
+    let link = "http://localhost:4000/categories/getCategories"
+
+    fetch(link, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json()
+    }).then(data => {
+      console.log(data.categories.categories)
+      setCategories(data.categories.categories)
+
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -47,7 +57,7 @@ function App() {
     ) {
       return;
     }
-    setState({ ...state, [anchor]: open });
+    setOpenMenu({ ...openMenu, [anchor]: open });
   };
 
   const list = (anchor) => (
@@ -68,9 +78,25 @@ function App() {
 
       <Divider />
 
+      <List>
+        <ListItem sx ={{ml : 1}}>
+          <ListItemText>Categories</ListItemText>
+        </ListItem>
+
+        {categories.map(i => {
+          return <ListItem  sx ={{ml : 2}}>
+            <ListItemText>
+              {`- ${i.name}`}
+            </ListItemText>
+          </ListItem>
+        })}
+      </List>
+
+      <Divider />
+
       <List onClick={toggleDrawer(anchor, false)}>
         <ListItem>
-          <ListItemButton onClick={()=>{setPage("favorites")}}>
+          <ListItemButton onClick={() => { setPage("favorites") }}>
             <ListItemText>Favorites</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <FavoriteIcon />
@@ -79,7 +105,7 @@ function App() {
         </ListItem>
 
         <ListItem>
-          <ListItemButton onClick={()=>{setPage("shoppingCart")}}>
+          <ListItemButton onClick={() => { setPage("shoppingCart") }}>
             <ListItemText>Shopping cart</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <ShoppingCartIcon />
@@ -88,7 +114,7 @@ function App() {
         </ListItem>
 
         <ListItem>
-          <ListItemButton onClick={()=>{setPage("manageAccount")}}>
+          <ListItemButton onClick={() => { setPage("manageAccount") }}>
             <ListItemText>Manage account</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <PersonIcon />
@@ -132,14 +158,18 @@ function App() {
 
           <SwipeableDrawer
             anchor={"left"}
-            open={state["left"]}
+            open={openMenu["left"]}
             onClose={toggleDrawer("left", false)}
             onOpen={toggleDrawer("left", true)}
           >
             {list("left")}
           </SwipeableDrawer>
 
-          <Grid onClick={()=>{setPage("main")}} container spacing={2} alignItems="center" justifyContent="center">
+          <IconButton onClick={() => { setPage("main") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
+            <HomeIcon fontSize="large" />
+          </IconButton>
+
+          <Grid onClick={() => { setPage("main") }} container spacing={2} alignItems="center" justifyContent="center">
             <Grid item>
               <Box
                 component="img"
@@ -156,17 +186,18 @@ function App() {
             </Grid>
           </Grid>
 
-          <IconButton onClick={()=>{setPage("favorites")}} color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={() => { setPage("favorites") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <FavoriteIcon fontSize="large" />
           </IconButton>
 
-          <IconButton onClick={()=>{setPage("shoppingCart")}}color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={() => { setPage("shoppingCart") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <ShoppingCartIcon fontSize="large" />
           </IconButton>
 
-          <IconButton  onClick={()=>{setPage("manageAccount")}} color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={() => { setPage("manageAccount") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <PersonIcon fontSize="large" />
           </IconButton>
+
         </Toolbar>
       </AppBar>
 
@@ -174,8 +205,8 @@ function App() {
         {
           "main": <MainPage />,
           "favorites": <FavoritesPage />,
-          "manageAccount": <ManageAccountPage/>,
-          "shoppingCart": <ShoppingCartPage/>
+          "manageAccount": <ManageAccountPage />,
+          "shoppingCart": <ShoppingCartPage />
         }[page]
       }
 

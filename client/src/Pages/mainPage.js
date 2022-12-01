@@ -1,14 +1,12 @@
-import TextField from '@mui/material/TextField';
-import Divider from '@mui/material/Divider';
-import { Paper, Grid, Card, CardContent, CardMedia, Button, Typography, CardActionArea, IconButton } from '@mui/material';
-
-import { useState } from "react"
+import { TextField, Grid, Divider, Typography, IconButton } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import Carousel from 'react-material-ui-carousel'
-import ProductMiniCard from '../Components/ProductMiniCard';
+import { useState } from "react"
 
+import Carousel from 'react-material-ui-carousel'
+
+import ProductMiniCard from '../Components/ProductMiniCard';
 import SliderProduct from '../Components/SliderProduct';
 
 function MainPage(props) {
@@ -33,7 +31,7 @@ function MainPage(props) {
                 <TextField label="What are you looking for?" color="primary" sx={{ width: "1000px" }} />
             </Divider>
 
-            <Carousel animation="slide">
+            <Carousel sx= {{width: "100%"}}>
                 {
                     items.map((item, i) => <SliderProduct key={i} item={item} />)
                 }
@@ -53,8 +51,6 @@ function MainPage(props) {
 
                     })
                 }
-
-
             </Grid>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -62,9 +58,6 @@ function MainPage(props) {
                     More <ExpandMoreIcon />
                 </IconButton>
             </div>
-
-
-
         </div>
     )
 }
