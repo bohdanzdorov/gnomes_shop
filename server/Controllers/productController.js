@@ -8,9 +8,17 @@ class ProductController{
 
     async addProduct(req, res, next){
         try{
+
+            let photo = req.file.filename
+
+            const photolink = `http://localhost:4000/images/products/${photo}`
+
+            photo = photolink
+            console.log(photo)
+
             const{name, category_id, price, sale, producer, description, sold_count} = req.body
 
-            const payload = new ProductDTO(name, -1, category_id,  price, sale, producer, description, sold_count)
+            const payload = new ProductDTO(name, -1, category_id,  price, sale, producer, description, sold_count, photo)
 
             const product = await productService.add(payload)
 

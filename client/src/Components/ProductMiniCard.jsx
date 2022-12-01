@@ -13,6 +13,14 @@ export default function ProductMiniCard(props) {
     const [isFavorite, setIsFavorite] = useState(false)
     const [isInCart, setIsInCart] = useState(false)
 
+    function favoriteClick(){
+        setIsFavorite(!isFavorite)
+    }
+
+    function cartClick(){
+        setIsInCart(!isInCart)
+    }
+
     return (
         <div>
             <Card sx={{ minWidth: "100px" }}>
@@ -41,16 +49,15 @@ export default function ProductMiniCard(props) {
 
                     <div style={{ display:'flex', justifyContent:'right' }}>
                         <CardContent sx = {{mt: 0}}>
-                            <IconButton  color="primary" sx={{ mr: 0 }} >
+                            <IconButton onClick={favoriteClick} color="primary" sx={{ mr: 0 }} >
                                 {!isFavorite ? <FavoriteBorderIcon fontSize="large"/> : <FavoriteIcon fontSize="large"/>}
                             </IconButton>
 
-                            <IconButton color="primary" sx={{ mr: 0 }} >
+                            <IconButton onClick={cartClick} color="primary" sx={{ mr: 0 }} >
                                 {!isInCart ? <AddShoppingCartIcon fontSize="large"/> : <ShoppingCartIcon fontSize="large"/>}
                             </IconButton>
                         </CardContent>
                     </div>
-
 
                 </CardActionArea>
 

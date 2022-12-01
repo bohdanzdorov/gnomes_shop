@@ -63,11 +63,11 @@ function MainPage(props) {
     var items = [
         {
             name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
+            description: "Product 1"
         },
         {
             name: "Random Name #2",
-            description: "Hello World!"
+            description: "Product 2"
         }
     ]
 
@@ -94,7 +94,7 @@ function MainPage(props) {
             <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
                 {
                     products.map(i => {
-                        return <Grid item key={i.name} sx={{ m: 1, maxWidth: "20%" }}>
+                        return <Grid item key={i.name} sx={{ m: 1, width: "20%", minWidth: "150px" }}>
                             <ProductMiniCard
                                 name={i.name}
                                 price={i.price}
