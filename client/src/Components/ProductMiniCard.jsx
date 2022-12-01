@@ -29,31 +29,30 @@ export default function ProductMiniCard(props) {
                     {/* Small character's info */}
                     <CardContent sx ={{mb: 0}}>
                         <Typography variant="h5">
-                            Name
+                            {props.name}
                         </Typography>
                         <Typography variant="h6">
-                            100$
+                            {props.price}
                         </Typography>
                         <Typography variant="h8">
-                            text text text text text text text text text text text text text text text text text text te...
+                            {props.description}
                         </Typography>
                     </CardContent>
 
                     <div style={{ display:'flex', justifyContent:'right' }}>
                         <CardContent sx = {{mt: 0}}>
-                            <IconButton color="primary" sx={{ mr: 0 }} >
-                                {!isFavorite ? <FavoriteBorderIcon /> : <FavoriteIcon/>}
+                            <IconButton  color="primary" sx={{ mr: 0 }} >
+                                {!isFavorite ? <FavoriteBorderIcon fontSize="large"/> : <FavoriteIcon fontSize="large"/>}
                             </IconButton>
 
                             <IconButton color="primary" sx={{ mr: 0 }} >
-                                {!isInCart ? <AddShoppingCartIcon /> : <ShoppingCartIcon/>}
+                                {!isInCart ? <AddShoppingCartIcon fontSize="large"/> : <ShoppingCartIcon fontSize="large"/>}
                             </IconButton>
                         </CardContent>
                     </div>
 
 
                 </CardActionArea>
-
 
             </Card>
         </div>

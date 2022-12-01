@@ -59,7 +59,7 @@ class CategoryController{
     async getCategories(req, res, next){
       try{
         const categories = await categoryService.getCategories();
-        console.log(categories)
+
         return res.status(200).json({
           succes: true,
           categories: categories

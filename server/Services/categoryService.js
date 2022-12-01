@@ -58,9 +58,8 @@ class CategoryService {
     async getCategories(){
         const categories =  await categoryModel.find({});
 
-        return {
-            categories: categories
-        }
+        return categories
+        
     }
 
     async find(categoryDTO) {

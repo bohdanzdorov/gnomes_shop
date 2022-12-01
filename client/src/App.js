@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     getCategories()
-  }, [openMenu])
+  }, [])
 
   function getCategories() {
     let link = "http://localhost:4000/categories/getCategories"
@@ -41,8 +41,8 @@ function App() {
     }).then((response) => {
       return response.json()
     }).then(data => {
-      console.log(data.categories.categories)
-      setCategories(data.categories.categories)
+      console.log(data.categories)
+      setCategories(data.categories)
 
     }).catch((err) => {
       console.log(err)
@@ -84,7 +84,7 @@ function App() {
         </ListItem>
 
         {categories.map(i => {
-          return <ListItem  sx ={{ml : 2}}>
+          return <ListItem key={i.name} sx ={{ml : 2}}>
             <ListItemText>
               {`- ${i.name}`}
             </ListItemText>

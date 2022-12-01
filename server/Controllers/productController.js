@@ -1,4 +1,5 @@
 const ProductDTO = require("../DTOs/productDTO")
+const productRouter = require("../Routers/productRouter")
 const productService = require("../Services/productService")
 
 
@@ -57,6 +58,26 @@ class ProductController{
             next(e);
         }
 
+    }
+
+    async getProductsPage(req, res, next) {
+        try {
+            let count = req.query.count
+            let page = req.query.page
+
+            if (!count)
+                count = 4
+
+            const resultProductsList = await productService.getProductsPage(page, count);
+
+            return res.status(200).json({
+                success: true,
+                products: resultProductsList
+            })
+
+        } catch (e) {
+            next(e)
+        }
     }
 
     async findProduct(req, res, next){

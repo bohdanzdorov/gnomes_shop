@@ -72,6 +72,13 @@ class ProductService{
         return nameCandidate
     }
 
+    async getProductsPage(page, count) {
+        let skip = (page - 1) * count
+        var productsQuery = await productModel.find().skip(skip).limit(count)
+    
+        return productsQuery
+    }
+
 
     async findById(productDTO){
         const idCandidate = await productModel.findOne({ product_id: productDTO.product_id});
