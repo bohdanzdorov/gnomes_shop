@@ -11,10 +11,9 @@ class ProductController{
 
             let photo = req.file.filename
 
-            const photolink = `http://localhost:4000/images/products/${photo}`
+            const photolink = `http://localhost:4000/photo/products/${photo}`
 
             photo = photolink
-            console.log(photo)
 
             const{name, category_id, price, sale, producer, description, sold_count} = req.body
 

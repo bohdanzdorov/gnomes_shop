@@ -16,6 +16,8 @@ import ShoppingCartPage from './Pages/shoppingCartPage';
 import BottomInfo from './Components/BottomInfo';
 
 import { useState, useEffect } from 'react';
+import LogInPage from './Pages/logInPage';
+import RegisterPage from './Pages/registerPage';
 
 function App() {
 
@@ -24,6 +26,9 @@ function App() {
   const [page, setPage] = useState("main")
 
   const [categories, setCategories] = useState([])
+
+  //0 - logIn, 1 - Registration, 2 - Manage Account
+  const [accountPageMode, setAccountPageMode] = useState(0)
 
   useEffect(() => {
     getCategories()
@@ -79,12 +84,12 @@ function App() {
       <Divider />
 
       <List>
-        <ListItem sx ={{ml : 1}}>
+        <ListItem sx={{ ml: 1 }}>
           <ListItemText>Categories</ListItemText>
         </ListItem>
 
         {categories.map(i => {
-          return <ListItem key={i.name} sx ={{ml : 2}}>
+          return <ListItem key={i.name} sx={{ ml: 2 }}>
             <ListItemText>
               {`- ${i.name}`}
             </ListItemText>
@@ -201,16 +206,16 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      {
+        {
         {
           "main": <MainPage />,
           "favorites": <FavoritesPage />,
-          "manageAccount": <ManageAccountPage />,
-          "shoppingCart": <ShoppingCartPage />
+          "shoppingCart": <ShoppingCartPage />,
+          "manageAccount": accountPageMode == 0 ? <LogInPage onClick = {()=> {setAccountPageMode(1)}}/> : accountPageMode == 1 ? <RegisterPage onClick = {()=> {setAccountPageMode(0)}}/> : <ManageAccountPage/>
         }[page]
       }
 
-      <BottomInfo />
+      <BottomInfo/>
 
     </div>
   );

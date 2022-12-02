@@ -28,10 +28,10 @@ export default function ProductMiniCard(props) {
                     {/* Character's photo */}
                     <CardMedia
                         component="img"
-                        maxheight="35%"
+                        height="100px "
                         width="100%"
-                        src="https://i1.sndcdn.com/avatars-000434396883-3whssn-t500x500.jpg"
-                        alt="profile photo"
+                        src={props.photo}
+                        alt="product photo"
                     />
 
                     {/* Small character's info */}

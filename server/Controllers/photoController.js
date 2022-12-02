@@ -6,8 +6,6 @@ class PhotoController{
         try{
             const photo = req.params.photo
 
-            console.log(photo)
-
             const resPhoto = await photoService.getProductPhoto(photo)
             res.sendFile(resPhoto);           
 

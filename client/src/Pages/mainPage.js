@@ -1,4 +1,4 @@
-import { TextField, Grid, Divider, Typography, IconButton, Box} from '@mui/material';
+import { TextField, Grid, Divider, Typography, IconButton, Box } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -33,8 +33,9 @@ const settings = {
 function MainPage(props) {
 
     const [products, setProducts] = useState([])
-
     const [productsPage, setProductsPage] = useState(1)
+
+    const [isMoreProducts, setIsMoreProducts] = useState(true)
 
     useEffect(() => {
         getProductsPage()
@@ -50,9 +51,18 @@ function MainPage(props) {
             return response.json()
 
         }).then(data => {
-            console.log(data.products)
-            let buff = products.concat(data.products)
-            setProducts(buff)
+
+            if (data.success == true) {
+                if (data.products.length == 0) {
+                    setIsMoreProducts(false)
+                } else {
+                    console.log(data.products)
+                    let buff = products.concat(data.products)
+                    setProducts(buff)
+                }
+
+            }
+
 
 
         }).catch((err) => {
@@ -77,7 +87,7 @@ function MainPage(props) {
                 <TextField label="What are you looking for?" color="primary" sx={{ width: "1000px" }} />
             </Divider>
 
-            <Box sx = {{mt: 1}}>
+            <Box sx={{ mt: 1 }}>
                 <Slider {...settings}>
                     {
                         items.map((item, i) => <SliderProduct sx={{ width: "100%" }} key={i} item={item} />)
@@ -96,6 +106,7 @@ function MainPage(props) {
                     products.map(i => {
                         return <Grid item key={i.name} sx={{ m: 1, width: "20%", minWidth: "150px" }}>
                             <ProductMiniCard
+                                photo={i.photo}
                                 name={i.name}
                                 price={i.price}
                                 description={i.description}
@@ -107,9 +118,13 @@ function MainPage(props) {
             </Grid>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {isMoreProducts ? 
                 <IconButton color="primary" onClick={() => { setProductsPage(productsPage + 1) }}>
-                    More <ExpandMoreIcon />
-                </IconButton>
+                    More
+                    <ExpandMoreIcon />
+                </IconButton> : 
+                <Typography>End</Typography>}
+
             </div>
         </div>
     )
