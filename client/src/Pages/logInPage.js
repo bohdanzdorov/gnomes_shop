@@ -5,7 +5,7 @@ function LogInPage(props) {
 
     return (
         <Stack alignItems={"center"} >
-            <Paper sx = {{width: "40%", p : 2}}>
+            <Paper sx = {{ minWidth: "250px", width: "40%", p : 2}}>
 
                 <Divider>
                     <Typography variant="h5">Log in</Typography>
