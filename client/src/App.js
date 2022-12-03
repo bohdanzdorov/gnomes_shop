@@ -27,6 +27,18 @@ function App() {
 
   const [categories, setCategories] = useState([])
 
+  const [name, setName] = useState("Unautharized")
+  const [email, setEmail] = useState("-")
+
+  const [isAuthorized, setIsAuthorized] = useState(false)
+
+  const handleLogIn = (e, v) => {
+    setName(sessionStorage.getItem("name"))
+    setEmail(sessionStorage.getItem("email"))
+    setAccountPageMode(3)
+    setIsAuthorized(true)
+  }
+
   //0 - logIn, 1 - Registration, 2 - Manage Account
   const [accountPageMode, setAccountPageMode] = useState(0)
 
@@ -74,10 +86,10 @@ function App() {
 
       <List>
         <ListItem sx={{ pt: 2, pl: 3, pb: 0 }}>
-          <ListItemText>AAA</ListItemText>
+          <ListItemText>{name}</ListItemText>
         </ListItem>
         <ListItem sx={{ pt: 0, pl: 3 }}>
-          <ListItemText primaryTypographyProps={{ fontSize: '0.75em' }} >aaa@mail.com</ListItemText>
+          <ListItemText primaryTypographyProps={{ fontSize: '0.75em' }} >{email}</ListItemText>
         </ListItem>
       </List>
 
@@ -211,7 +223,9 @@ function App() {
           "main": <MainPage />,
           "favorites": <FavoritesPage />,
           "shoppingCart": <ShoppingCartPage />,
-          "manageAccount": accountPageMode == 0 ? <LogInPage onClick = {()=> {setAccountPageMode(1)}}/> : accountPageMode == 1 ? <RegisterPage onClick = {()=> {setAccountPageMode(0)}}/> : <ManageAccountPage/>
+          "manageAccount": accountPageMode == 0 ? <LogInPage onClick = {()=> {setAccountPageMode(1)}} handleLogIn={handleLogIn}/> :
+           accountPageMode == 1 ? 
+           <RegisterPage onClick = {()=> {setAccountPageMode(0)}}/> : <ManageAccountPage/>
         }[page]
       }
 

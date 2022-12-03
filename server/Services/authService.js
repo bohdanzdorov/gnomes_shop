@@ -114,6 +114,7 @@ class AuthService {
 
         return {
            name: nameCandidate.name, 
+           email: nameCandidate.email,
            token: token
         }
     }
