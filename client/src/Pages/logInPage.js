@@ -30,8 +30,7 @@ function LogInPage(props) {
             }else{
                 console.log("Success")
                 sessionStorage.setItem("token", data.user.token)
-                sessionStorage.setItem("name", data.user.name)
-                sessionStorage.setItem("email", data.user.email)
+                sessionStorage.setItem("user_id", data.user.user_id)
                 props.handleLogIn()
             }
            

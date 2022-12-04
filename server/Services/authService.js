@@ -22,10 +22,7 @@ class AuthService {
         const user = await userModel.create({ name: userDTO.name, user_id: Date.now(), password: userDTO.password, email: userDTO.email, phone: userDTO.phone, whishList: [], favoritesList: [] });
 
         return {
-            name: userDTO.name,
-            password: userDTO.password,
-            email: userDTO.email,
-            phone: userDTO.phone,
+            user_id: user.user_id,
             token: token
         }
     }
