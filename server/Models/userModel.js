@@ -6,6 +6,7 @@ const UserSchema = new Schema({
    password: {type: String, require: true},
    user_id: {type: Number, require: true, unique: true},
    email: {type: String, require: true, unique: true},
+   phone: {type: String, require: true},
    whishList : { type : Array , "default" : [] },
    favoritesList : { type : Array , "default" : [] }
 

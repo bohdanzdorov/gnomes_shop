@@ -6,8 +6,8 @@ class AuthController{
 
     async registration(req, res, next){
         try{
-          const {name, password, email} = req.body;
-          const payload = new UserDTO(name, password, -1, email);
+          const {name, password, email, phone} = req.body;
+          const payload = new UserDTO(name, password, -1, email, phone);
 
           const user = await authService.registration(payload);
 
@@ -158,12 +158,11 @@ class AuthController{
       }
     }
 
-    async findUser(req, res, next){
+    async findUserById(req, res, next){
         try{
-          const {name, password} = req.body;
-          const payload = new UserDTO(name, password);
+          const {user_id} = req.body;
 
-          const user = await authService.find(payload);
+          const user = await authService.findById(user_id);
          
           return res.status(200).json({
             success: true,

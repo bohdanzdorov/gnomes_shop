@@ -12,7 +12,6 @@ authRouter.post("/addToWhishList", controller.addToWhishlist);
 authRouter.delete("/removeFromWhishlist", controller.removeFromWhishlist);
 authRouter.post("/addToFavorites", controller.addToFavorites);
 authRouter.delete("/removeFromFavorites", controller.removeFromFavorites)
-authRouter.get("/find", controller.findUser);
-
+authRouter.post("/find", controller.findUserById);
 
 module.exports = authRouter;

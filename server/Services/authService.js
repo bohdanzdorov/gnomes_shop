@@ -19,12 +19,13 @@ class AuthService {
 
         const token = jwt.sign({}, process.env.SECRET_USER_ACCESS_TOKEN, { expiresIn: "7200s" })
 
-        const user = await userModel.create({ name: userDTO.name, user_id: Date.now(), password: userDTO.password, email: userDTO.email, whishList: [], favoritesList: [] });
+        const user = await userModel.create({ name: userDTO.name, user_id: Date.now(), password: userDTO.password, email: userDTO.email, phone: userDTO.phone, whishList: [], favoritesList: [] });
 
         return {
             name: userDTO.name,
             password: userDTO.password,
             email: userDTO.email,
+            phone: userDTO.phone,
             token: token
         }
     }
@@ -113,8 +114,7 @@ class AuthService {
         const token = jwt.sign({}, process.env.SECRET_USER_ACCESS_TOKEN, { expiresIn: "7200s" })
 
         return {
-           name: nameCandidate.name, 
-           email: nameCandidate.email,
+           user_id: nameCandidate.user_id, 
            token: token
         }
     }
@@ -199,26 +199,20 @@ class AuthService {
         }
     }
 
-    async find(userDTO) {
-        const nameCandidate = await userModel.findOne({ name: userDTO.name });
+    async findById(user_id) {
+        const idCandidate = await userModel.findOne({ user_id: user_id });
 
-        if (!nameCandidate) {
+        if (!idCandidate) {
             throw new ApiError(422, "Current name or password is incorrect!")
         }
 
-        if (!bcrypt.compareSync(userDTO.password, nameCandidate.password)) {
-            throw new ApiError(422, "Current name or password is incorrect");
-        }
-
-        const token = jwt.sign({}, process.env.SECRET_USER_ACCESS_TOKEN, { expiresIn: "7200s" })
-
         return {
-            name: nameCandidate.name,
-            password: nameCandidate.password,
-            user_id: nameCandidate.user_id,
-            email: nameCandidate.email,
-            whishList: nameCandidate.whishList,
-            favoritesList: nameCandidate.favoritesList
+            name: idCandidate.name,
+            user_id: idCandidate.user_id,
+            email: idCandidate.email,
+            phone: idCandidate.phone,
+            whishList: idCandidate.whishList,
+            favoritesList: idCandidate.favoritesList
         }
     }
 
