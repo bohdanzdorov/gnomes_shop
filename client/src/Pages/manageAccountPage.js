@@ -45,8 +45,34 @@ function ManageAccountPage(props) {
         })
     }
 
-    function changeUserInfo(){
-        
+    function updateUserInfo(){
+        let link = "http://localhost:4000/authentication/updateUser"
+
+        let user_id = sessionStorage.getItem("user_id")
+
+        fetch(link, {
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify({
+                name: name, 
+                email: email,
+                phone: phone, 
+                user_id : user_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        }).then(data => {
+            if(!data.success){
+               console.log("Failed")
+            }else{
+                console.log("Success")
+            }
+        }).catch((err) => {
+            console.log(err)
+        })                   
     } 
 
     return (
@@ -94,7 +120,7 @@ function ManageAccountPage(props) {
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
 
-                <Button variant="outlined" color="success" sx={{ minWidth: "150px", width: "15%", m: 1, mb: 3, p: 1 }}>
+                <Button variant="outlined" color="success" onClick={updateUserInfo} sx={{ minWidth: "150px", width: "15%", m: 1, mb: 3, p: 1 }}>
                     <IconButton>
                         <Typography sx={{ mr: 1 }}>
                             Save changes

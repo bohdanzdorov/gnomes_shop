@@ -46,6 +46,22 @@ class AuthService {
         }
     }
 
+    async updateUserById(newUserDTO){
+        const updateCandidate = await userModel.findOne({ user_id: newUserDTO.user_id });
+
+        if (!updateCandidate) {
+          throw new ApiError(422, "Invalid user id!");
+        }
+
+        await userModel.updateOne({user_id: newUserDTO.user_id}, {name : newUserDTO.name, phone : newUserDTO.phone, email: newUserDTO.email});
+    
+        return { 
+            name : newUserDTO.name,
+            email: newUserDTO.email,
+            phone: newUserDTO.phone
+         }
+    }
+
     async changePassword(userDTO, newPassword) {
 
         const changeCandidate = await userModel.findOne({ name: userDTO.name });

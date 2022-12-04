@@ -38,6 +38,23 @@ class AuthController{
         }
     }
 
+    async updateUserById(req, res, next){
+      try{
+        const {user_id, name, password, email, phone} = req.body
+        const payload = new UserDTO(name, password, user_id, email, phone)
+
+        const user = await authService.updateUserById(payload);
+
+        return res.status(200).json({
+          success: true,
+          user: user
+        });
+
+      }catch(e){
+        next(e)
+      }
+    }
+
     async changePassword(req, res, next){
         try{
           const {name, password, newPassword} = req.body;
