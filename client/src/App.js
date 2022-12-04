@@ -33,10 +33,34 @@ function App() {
   const [isAuthorized, setIsAuthorized] = useState(false)
 
   const handleUserAuthorization = (e, v) => {
-    setName(sessionStorage.getItem("name"))
-    setEmail(sessionStorage.getItem("email"))
-    setAccountPageMode(2)
-    setIsAuthorized(true)
+
+    let link = "http://localhost:4000/authentication/find"
+
+    let user_id = sessionStorage.getItem("user_id")
+
+    fetch(link, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        user_id: user_id
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json()
+    }).then(data => {
+      if (data.success) {
+        setName(data.user.name)
+        setEmail(data.user.email)
+        setAccountPageMode(2)
+        setIsAuthorized(true)
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+
+
   }
 
   const handleUserLogOut = (e, v) => {
@@ -230,20 +254,20 @@ function App() {
         </Toolbar>
       </AppBar>
 
-        {
+      {
         {
           "main": <MainPage />,
           "favorites": <FavoritesPage />,
           "shoppingCart": <ShoppingCartPage />,
-          "manageAccount": accountPageMode == 0 ? 
-          <LogInPage onClick = {()=> {setAccountPageMode(1)}} handleLogIn={handleUserAuthorization}/> :
-           accountPageMode == 1 ? 
-           <RegisterPage onClick = {()=> {setAccountPageMode(0)}} handleRegister={handleUserAuthorization}/> :
-           <ManageAccountPage handleUserLogOut={handleUserLogOut}/>
+          "manageAccount": accountPageMode == 0 ?
+            <LogInPage onClick={() => { setAccountPageMode(1) }} handleLogIn={handleUserAuthorization} /> :
+            accountPageMode == 1 ?
+              <RegisterPage onClick={() => { setAccountPageMode(0) }} handleRegister={handleUserAuthorization} /> :
+              <ManageAccountPage handleUserLogOut={handleUserLogOut} />
         }[page]
       }
 
-      <BottomInfo/>
+      <BottomInfo />
 
     </div>
   );

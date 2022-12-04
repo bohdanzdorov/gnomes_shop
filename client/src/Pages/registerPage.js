@@ -7,6 +7,7 @@ function RegisterPage(props) {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [phone, setPhone] = useState("")
 
     function register() {
 
@@ -18,12 +19,12 @@ function RegisterPage(props) {
             body: JSON.stringify({
                 name: name,
                 password: password,   
-                email: email     
+                email: email,
+                phone: phone
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
-
         }).then((response) => {
             return response.json()
         }).then(data => {
@@ -32,8 +33,7 @@ function RegisterPage(props) {
             }else{
                 console.log("Success")
                 sessionStorage.setItem("token", data.user.token)
-                sessionStorage.setItem("name", data.user.name)
-                sessionStorage.setItem("email", data.user.email)
+                sessionStorage.setItem("user_id", data.user.user_id)
                 props.handleRegister()
             }
            
@@ -56,6 +56,8 @@ function RegisterPage(props) {
                     label="Password" onChange={(e, v) => setPassword(e.target.value)} variant="standard" />
                     <TextField sx={{ minWidth: "250px", width: "25%" }} id="standard-basic" 
                     label="Email" onChange={(e, v) => setEmail(e.target.value)} variant="standard" />
+                    <TextField sx={{ minWidth: "250px", width: "25%" }} id="standard-basic" 
+                    label="Phone" onChange={(e, v) => setPhone(e.target.value)} variant="standard" />
 
                     <Stack direction={"row"} spacing={2}>
                         <Button variant="outlined" color="success" sx={{ p: 1 }}>
