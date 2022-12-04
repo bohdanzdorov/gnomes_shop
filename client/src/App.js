@@ -32,12 +32,24 @@ function App() {
 
   const [isAuthorized, setIsAuthorized] = useState(false)
 
-  const handleLogIn = (e, v) => {
+  const handleUserAuthorization = (e, v) => {
     setName(sessionStorage.getItem("name"))
     setEmail(sessionStorage.getItem("email"))
-    setAccountPageMode(3)
+    setAccountPageMode(2)
     setIsAuthorized(true)
   }
+
+  const handleUserLogOut = (e, v) => {
+    sessionStorage.setItem("name", "Unautharized")
+    sessionStorage.setItem("email", "-")
+    sessionStorage.setItem("token", "")
+    setName(sessionStorage.getItem("name"))
+    setEmail(sessionStorage.getItem("email"))
+    setAccountPageMode(0)
+    setIsAuthorized(false)
+  }
+
+
 
   //0 - logIn, 1 - Registration, 2 - Manage Account
   const [accountPageMode, setAccountPageMode] = useState(0)
@@ -223,9 +235,11 @@ function App() {
           "main": <MainPage />,
           "favorites": <FavoritesPage />,
           "shoppingCart": <ShoppingCartPage />,
-          "manageAccount": accountPageMode == 0 ? <LogInPage onClick = {()=> {setAccountPageMode(1)}} handleLogIn={handleLogIn}/> :
+          "manageAccount": accountPageMode == 0 ? 
+          <LogInPage onClick = {()=> {setAccountPageMode(1)}} handleLogIn={handleUserAuthorization}/> :
            accountPageMode == 1 ? 
-           <RegisterPage onClick = {()=> {setAccountPageMode(0)}}/> : <ManageAccountPage/>
+           <RegisterPage onClick = {()=> {setAccountPageMode(0)}} handleRegister={handleUserAuthorization}/> :
+           <ManageAccountPage handleUserLogOut={handleUserLogOut}/>
         }[page]
       }
 

@@ -1,6 +1,6 @@
 import { Typography, Divider, List, Button, ListItem, TextField } from "@mui/material"
 
-function ManageAccountPage() {
+function ManageAccountPage(props) {
     return (
         <div>
             <Divider>
@@ -42,6 +42,12 @@ function ManageAccountPage() {
                 <Button variant="outlined" color="success" sx={{ width: "15%", m: 1, mb: 3, p: 2 }}>
                     <Typography>
                         Save changes
+                    </Typography>
+                </Button>
+
+                <Button variant="outlined" color="success" onClick={props.handleUserLogOut}sx={{ width: "15%", m: 1, mb: 3, p: 2 }}>
+                    <Typography>
+                        Log out
                     </Typography>
                 </Button>
             </div>

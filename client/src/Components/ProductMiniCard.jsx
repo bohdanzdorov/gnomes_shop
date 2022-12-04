@@ -28,7 +28,6 @@ export default function ProductMiniCard(props) {
                     {/* Character's photo */}
                     <CardMedia
                         component="img"
-                        height="100px "
                         width="100%"
                         src={props.photo}
                         alt="product photo"
