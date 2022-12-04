@@ -1,10 +1,54 @@
 import { Typography, Divider, List, Button, ListItem, TextField, Stack, IconButton } from "@mui/material"
 
 import LogoutIcon from '@mui/icons-material/Logout';
-
 import SaveIcon from '@mui/icons-material/Save';
+import { useEffect, useState } from "react";
 
 function ManageAccountPage(props) {
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
+
+    useEffect(()=>{
+        loadAccountInfo()
+    }, [])
+
+    function loadAccountInfo(){
+        let link = "http://localhost:4000/authentication/find"
+
+        let user_id = sessionStorage.getItem("user_id")
+
+        fetch(link, {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({
+                user_id: user_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        }).then(data => {
+            if(!data.success){
+               console.log("Failed")
+            }else{
+                console.log("Success")
+                setName(data.user.name)
+                setEmail(data.user.email)
+                setPhone(data.user.phone)
+            }
+           
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    function changeUserInfo(){
+        
+    } 
+
     return (
         <div>
             <Divider>
@@ -13,8 +57,6 @@ function ManageAccountPage(props) {
                 </Typography>
             </Divider>
 
-
-
             <Stack alignItems="center" >
                 <List sx={{ ml: 1 }}>
                     <ListItem sx={{ m: 2 }}>
@@ -22,16 +64,7 @@ function ManageAccountPage(props) {
                             Name :
                         </Typography>
                         <TextField
-                            id="standard-basic" defaultValue="aaa" variant="standard"
-                        />
-                    </ListItem>
-
-                    <ListItem sx={{ m: 2 }}>
-                        <Typography variant="h5" sx={{ mr: 2 }}>
-                            Phone :
-                        </Typography>
-                        <TextField
-                            id="standard-basic" defaultValue="+0000000000" variant="standard"
+                            id="standard-basic" value={name} onChange={(e, v) => {setName(e.target.value)}} variant="standard"
                         />
                     </ListItem>
 
@@ -40,9 +73,20 @@ function ManageAccountPage(props) {
                             Email :
                         </Typography>
                         <TextField
-                            id="standard-basic" defaultValue="aaa@mail.com" variant="standard"
+                            id="standard-basic" value={email} onChange={(e, v) => {setEmail(e.target.value)}} variant="standard"
                         />
                     </ListItem>
+
+                    <ListItem sx={{ m: 2 }}>
+                        <Typography variant="h5" sx={{ mr: 2 }}>
+                            Phone :
+                        </Typography>
+                        <TextField
+                            id="standard-basic" value={phone} onChange={(e, v) => {setPhone(e.target.value)}} variant="standard"
+                        />
+                    </ListItem>
+
+                  
                 </List>
 
             </Stack>
