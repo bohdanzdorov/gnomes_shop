@@ -9,7 +9,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import MainPage from './Pages/mainPage';
 import ProductPage from './Pages/productPage';
-import FavoritesPage from './Pages/favoritesPage';
+import WishlistPage from './Pages/wishlistPage';
 import ManageAccountPage from './Pages/manageAccountPage';
 import ShoppingCartPage from './Pages/shoppingCartPage';
 
@@ -79,6 +79,7 @@ function App() {
   const [accountPageMode, setAccountPageMode] = useState(0)
 
   useEffect(() => {
+    
     getCategories()
   }, [])
 
@@ -239,7 +240,7 @@ function App() {
             </Grid>
           </Grid>
 
-          <IconButton onClick={() => { setPage("favorites") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
+          <IconButton onClick={() => { setPage("wishlist") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <FavoriteIcon fontSize="large" />
           </IconButton>
 
@@ -257,7 +258,7 @@ function App() {
       {
         {
           "main": <MainPage />,
-          "favorites": <FavoritesPage />,
+          "wishlist": <WishlistPage />,
           "shoppingCart": <ShoppingCartPage />,
           "manageAccount": accountPageMode == 0 ?
             <LogInPage onClick={() => { setAccountPageMode(1) }} handleLogIn={handleUserAuthorization} /> :

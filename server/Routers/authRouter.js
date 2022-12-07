@@ -14,5 +14,6 @@ authRouter.delete("/removeFromWhishlist", controller.removeFromWhishlist);
 authRouter.post("/addToFavorites", controller.addToFavorites);
 authRouter.delete("/removeFromFavorites", controller.removeFromFavorites)
 authRouter.post("/find", controller.findUserById);
+authRouter.get("/getWishList", controller.getWishList);
 
 module.exports = authRouter;

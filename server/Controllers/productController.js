@@ -89,10 +89,9 @@ class ProductController{
 
     async findProduct(req, res, next){
         try{
-            const{name, product_id} = req.body
+            let name = req.query.name
+            let product_id = req.query.product_id
             const payload = new ProductDTO(name, product_id)
-
-            console.log(payload.name)
 
             let product
             if(!payload.name){

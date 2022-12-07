@@ -172,6 +172,16 @@ class AuthService {
         }
     }
 
+    async getWishList(user_id){
+        const userCandidate = await userModel.findOne({user_id: user_id})
+
+        if(!userCandidate){
+            throw new ApiError(422, "Invalid user id")
+        }
+
+        return userCandidate.whishList 
+    }
+
     async addToFavorites(userDTO, productDTO){
         const userCandidate = await userModel.findOne({user_id: userDTO.user_id})
 

@@ -141,6 +141,22 @@ class AuthController{
       }
     }
 
+    async getWishList(req, res, next){
+      try{
+
+        let user_id = req.query.user_id
+
+        const whishList = await authService.getWishList(user_id);
+
+        return res.status(200).json({
+          success: true,
+          whishList: whishList
+        })
+      }catch(e){
+        next(e)
+      }
+    }
+
     async addToFavorites(req, res, next){
       try{
         const {user_id, product_id} = req.body

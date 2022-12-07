@@ -10,6 +10,6 @@ productRouter.post("/add", upload, adminValidationMiddleware, controller.addProd
 productRouter.delete("/remove", adminValidationMiddleware, controller.removeProduct)
 productRouter.put("/changeById", adminValidationMiddleware, controller.changeProductById)
 productRouter.get("/getProductsPage", controller.getProductsPage)
-productRouter.get("/findByName", adminValidationMiddleware, controller.findProduct)
+productRouter.get("/getProduct", controller.findProduct)
 
 module.exports = productRouter
