@@ -35,15 +35,42 @@ function MainPage(props) {
     const [products, setProducts] = useState([])
     const [productsPage, setProductsPage] = useState(1)
 
+    const [wishListProducts, setWishListProducts] = useState([]) 
+
     const [isMoreProducts, setIsMoreProducts] = useState(true)
 
     useEffect(() => {
-        getProductsPage()
+        loadWishList()
     }, [productsPage])
+
+    function loadWishList() {
+        let link = `http://localhost:4000/authentication/getWishList?user_id=${sessionStorage.getItem("user_id")}`
+
+        fetch(link, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            return response.json()
+        }).then(data => {
+            if (!data.success) {
+                console.log("Failed to get wishList")
+            } else {
+                console.log("WishList : " + data.whishList)
+                setWishListProducts(data.whishList)
+                getProductsPage()
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     function getProductsPage() {
         let link = `http://localhost:4000/products/getProductsPage?page=${productsPage}&count=4`
-
+        
         fetch(link, {
             method: 'GET',
             mode: 'cors'
@@ -53,17 +80,17 @@ function MainPage(props) {
         }).then(data => {
 
             if (data.success == true) {
+
                 if (data.products.length == 0) {
                     setIsMoreProducts(false)
                 } else {
                     console.log(data.products)
+
+
                     let buff = products.concat(data.products)
                     setProducts(buff)
                 }
-
             }
-
-
 
         }).catch((err) => {
             console.log(err)
@@ -83,6 +110,10 @@ function MainPage(props) {
 
     return (
         <div>
+
+            <p>
+                {wishListProducts}
+            </p>
             <Divider textAlign="center" role="presentation">
                 <TextField label="What are you looking for?" color="primary" sx={{ width: "1000px" }} />
             </Divider>
@@ -95,21 +126,22 @@ function MainPage(props) {
                 </Slider>
             </Box>
 
-
-
             <Divider sx={{ mt: 2 }} textAlign="center" role="presentation">
                 <Typography variant="h4">Top products</Typography>
             </Divider>
 
             <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
                 {
-                    products.map(i => {
+                    products.map(i => { 
+
                         return <Grid item key={i.name} sx={{ m: 1, width: "20%", minWidth: "150px" }}>
                             <ProductMiniCard
                                 photo={i.photo}
                                 name={i.name}
                                 price={i.price}
                                 description={i.description}
+                                product_id={i.product_id}
+                                user_whishList = {wishListProducts}
                             />
                         </Grid>
 

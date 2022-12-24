@@ -11,9 +11,44 @@ import { useState } from 'react';
 export default function ProductMiniCard(props) {
 
     const [isFavorite, setIsFavorite] = useState(false)
+
     const [isInCart, setIsInCart] = useState(false)
 
     function favoriteClick(){
+
+        let link
+        let method
+        if(!isFavorite){
+            link = "http://localhost:4000/authentication/addToWhishList"
+            method = "POST"
+        }else{
+            link = "http://localhost:4000/authentication/removeFromWhishlist" 
+            method = "DELETE"
+        }
+
+        fetch(link, {
+          method: method,
+            mode: 'cors',
+            body: JSON.stringify({
+                user_id: sessionStorage.getItem("user_id"),
+                product_id: props.product_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        }).then(data => {
+            if(!data.success){
+               console.log("Failed")
+            }else{
+                console.log(data)
+            }
+           
+        }).catch((err) => {
+            console.log(err)
+        })
+        console.log(props.product_id)
         setIsFavorite(!isFavorite)
     }
 

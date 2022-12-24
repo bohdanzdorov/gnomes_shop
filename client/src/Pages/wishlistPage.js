@@ -15,6 +15,7 @@ function WishlistPage() {
 
 
     useEffect(() => {
+        console.log('i fire once');
         loadWishList()
     }, [])
 
@@ -37,7 +38,6 @@ function WishlistPage() {
                 let buffProducts = []
 
                 for (let i = 0; i < data.whishList.length; i++) {
-
                     let productLink = `http://localhost:4000/products/getProduct?product_id=${data.whishList[i]}`
 
                     fetch(productLink, {
@@ -54,14 +54,18 @@ function WishlistPage() {
                             console.log("Failed to load product")
                         } else {
                             buffProducts.push(product.product)
-                            setProducts(buffProducts)
+                            if(i == data.whishList.length-1){
+                                setProducts(buffProducts)
+                                console.log("Buff[rpducts:")
+                                console.log(buffProducts)
+                            }
+                           
                         }
 
                     }).catch((err) => {
                         console.log(err)
                     })
                 }
-
             }
 
         }).catch((err) => {
@@ -80,12 +84,15 @@ function WishlistPage() {
             <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
                 {
                     products.map(i => {
+                        console.log(i.name)
                         return <Grid item key={i.name} sx={{ m: 1, width: "20%", minWidth: "150px" }}>
                             <ProductMiniCard
                                 photo={i.photo}
                                 name={i.name}
                                 price={i.price}
                                 description={i.description}
+                                product_id = {i.product_id}
+                                user_whishList = {[]}
                             />
                         </Grid>
                     })

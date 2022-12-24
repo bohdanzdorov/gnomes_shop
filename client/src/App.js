@@ -150,7 +150,7 @@ function App() {
 
       <List onClick={toggleDrawer(anchor, false)}>
         <ListItem>
-          <ListItemButton onClick={() => { setPage("favorites") }}>
+          <ListItemButton onClick={() => { setPage("wishlist") }}>
             <ListItemText>Favorites</ListItemText>
             <ListItemIcon sx={{ ml: 1 }}>
               <FavoriteIcon />
@@ -240,13 +240,16 @@ function App() {
             </Grid>
           </Grid>
 
-          <IconButton onClick={() => { setPage("wishlist") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
+          {accountPageMode == 2 ? 
+           <IconButton onClick={() => { setPage("wishlist") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <FavoriteIcon fontSize="large" />
-          </IconButton>
+          </IconButton>  : <p></p>}
 
-          <IconButton onClick={() => { setPage("shoppingCart") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
-            <ShoppingCartIcon fontSize="large" />
-          </IconButton>
+          {accountPageMode == 2 ? 
+            <IconButton onClick={() => { setPage("shoppingCart") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
+              <ShoppingCartIcon fontSize="large" />
+            </IconButton> : <p></p>}
+         
 
           <IconButton onClick={() => { setPage("manageAccount") }} color="inherit" sx={{ pr: 2, pl: 2 }}>
             <PersonIcon fontSize="large" />
