@@ -50,6 +50,7 @@ function WishlistPage() {
                     }).then((response) => {
                         return response.json()
                     }).then(product => {
+                        console.log(product)
                         if (!product.success) {
                             console.log("Failed to load product")
                         } else {
@@ -92,6 +93,7 @@ function WishlistPage() {
                                 price={i.price}
                                 description={i.description}
                                 product_id = {i.product_id}
+                                isFavorite = {true}
                                 user_whishList = {[]}
                             />
                         </Grid>

@@ -239,6 +239,16 @@ class AuthService {
         }
     }
 
+    async getInCart(user_id){
+        const userCandidate = await userModel.findOne({user_id: user_id})
+
+        if(!userCandidate){
+            throw new ApiError(422, "Invalid user id")
+        }
+
+        return userCandidate.favoritesList 
+    }
+
 }
 
 

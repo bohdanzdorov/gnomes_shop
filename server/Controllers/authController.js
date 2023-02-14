@@ -157,6 +157,22 @@ class AuthController{
       }
     }
 
+    async getInCart(req, res, next){
+      try{
+
+        let user_id = req.query.user_id
+
+        const inCart = await authService.getInCart(user_id);
+
+        return res.status(200).json({
+          success: true,
+          inCart: inCart
+        })
+      }catch(e){
+        next(e)
+      }
+    }
+
     async addToFavorites(req, res, next){
       try{
         const {user_id, product_id} = req.body

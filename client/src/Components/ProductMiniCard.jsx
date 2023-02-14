@@ -10,12 +10,47 @@ import { useState } from 'react';
 
 export default function ProductMiniCard(props) {
 
-    const [isFavorite, setIsFavorite] = useState(false)
+    const [isFavorite, setIsFavorite] = useState(props.isFavorite)
 
-    const [isInCart, setIsInCart] = useState(false)
+    const [isInCart, setIsInCart] = useState(props.isInCart)
+
+    function cartClick(){
+        let link
+        let method
+        if(!isInCart){
+            link = "http://localhost:4000/authentication/addToFavorites"
+            method = "POST"
+        }else{
+            link = "http://localhost:4000/authentication/removeFromFavorites" 
+            method = "DELETE"
+        }
+
+        fetch(link, {
+          method: method,
+            mode: 'cors',
+            body: JSON.stringify({
+                user_id: sessionStorage.getItem("user_id"),
+                product_id: props.product_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        }).then(data => {
+            if(!data.success){
+               console.log("Failed")
+            }else{
+                console.log(data)
+            }
+           
+        }).catch((err) => {
+            console.log(err)
+        })
+        setIsInCart(!isInCart)
+    }
 
     function favoriteClick(){
-
         let link
         let method
         if(!isFavorite){
@@ -52,10 +87,6 @@ export default function ProductMiniCard(props) {
         setIsFavorite(!isFavorite)
     }
 
-    function cartClick(){
-        setIsInCart(!isInCart)
-    }
-
     return (
         <div>
             <Card sx={{ minWidth: "100px" }}>
@@ -74,7 +105,7 @@ export default function ProductMiniCard(props) {
                             {props.name}
                         </Typography>
                         <Typography variant="h6">
-                            {props.price}
+                            {props.price} $
                         </Typography>
                         <Typography variant="h8">
                             {props.description}
